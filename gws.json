@@ -7,24 +7,26 @@
   "services": [
     {
       "name": "react-app",
-      "path": "react-app",
-      "image": "react-app",
-      "manifests": ".gws/k8s",
-      "dockerfile": ".gws/Dockerfile"
+      "path": "./react-app",
+      "port": 3000,
+      "fileSync": true,
+      "dockerfile": ".gws/Dockerfile",
+      "watch": [
+        { "actions": ["rebuildImage"], "patterns": ["package.json", "package-lock.json"] }
+      ],
+      "fileSyncIgnore": ["node_modules/", "build/", ".next/", ".turbo/", "coverage/", "*.log"]
     },
     {
       "name": "express-server",
-      "path": "express-server",
-      "image": "express-server",
-      "manifests": ".gws/k8s",
-      "dockerfile": ".gws/Dockerfile"
+      "path": "./express-server",
+      "port": 3001,
+      "fileSync": true,
+      "dockerfile": ".gws/Dockerfile",
+      "watch": [
+        { "actions": ["rebuildImage"], "patterns": ["package.json", "package-lock.json"] }
+      ],
+      "fileSyncIgnore": ["node_modules/", "dist/", "build/", "coverage/", "*.log"]
     }
   ],
-  "provision": {
-    "environments": {
-      "dev": {
-        "type": "k3d"
-      }
-    }
-  }
+  "fileSyncIgnore": ["/.git", "/.idea", "/.vscode", "/.DS_Store"]
 }
